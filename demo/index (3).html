@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Chen - 个人博客</title>
+  <!-- Tailwind CSS v3 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <!-- 统一的 Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1a365d',
+            secondary: '#2b6cb0',
+            accent: '#4299e1',
+            dark: {
+              primary: '#2d3748',
+              secondary: '#4a5568',
+              accent: '#63b3ed'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-in-out',
+            'slide-up': 'slideUp 0.5s ease-in-out',
+            'slide-down': 'slideDown 0.5s ease-in-out',
+            'pulse-slow': 'pulse 3s infinite'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' }
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(-20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-accent to-secondary;
+      }
+      .bg-blur {
+        backdrop-filter: blur(8px);
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+      }
+      .section-padding {
+        @apply py-16 md:py-24;
+      }
+      .section-title {
+        @apply text-3xl md:text-4xl font-bold mb-8 text-center;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+  <!-- 导航栏 -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-90 dark:bg-dark-primary dark:bg-opacity-90 bg-blur">
+    <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="#hero" class="text-2xl font-bold text-primary dark:text-accent">郑<span class="text-accent dark:text-secondary">宇航</span></a>
+      
+      <!-- 桌面导航 -->
+      <div class="hidden md:flex space-x-8">
+        <a href="#home" class="nav-link">个人</a>
+        <a href="#blog" class="nav-link">爱好</a>
+        <a href="#portfolio" class="nav-link">目标</a>
+        <a href="#about" class="nav-link">AV</a>
+        <a href="#contact" class="nav-link">证书</a>
+      </div>
+      
+      <!-- 主题切换按钮 -->
+      <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <i class="fa fa-moon-o dark:hidden" aria-hidden="true"></i>
+        <i class="fa fa-sun-o hidden dark:block text-yellow-300" aria-hidden="true"></i>
+      </button>
+      
+      <!-- 移动端菜单按钮 -->
+      <button id="mobile-menu-button" class="md:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </button>
+    </nav>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg animate-fade-in">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+        <a href="#home" class="py-2 mobile-nav-link">首页</a>
+        <a href="#blog" class="py-2 mobile-nav-link">爱好</a>
+        <a href="#portfolio" class="py-2 mobile-nav-link">作品集</a>
+        <a href="#about" class="py-2 mobile-nav-link">关于我</a>
+        <a href="#contact" class="py-2 mobile-nav-link">联系</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero 区域 -->
+  <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/a31cb3a056844f4dbc92de39aebfc64e~tplv-a9rns2rl98-image.image?rcl=20250927150945623B459B707021C9CEFD&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1761549006&x-signature=lgKRVIPg2JEm%2FEMm4BwC9nkBa1w%3D" 
+           alt="背景" 
+           class="w-full h-full object-cover opacity-70 dark:opacity-40">
+      <div class="absolute inset-0 bg-gradient-to-b from-primary/50 to-gray-900/80"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 z-10 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 animate-fade-in">
+        <span class="block">你好，我是</span>
+        <span class="text-accent">Alex Chen</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto animate-slide-up">
+        设计师 & 开发者，专注于创造美观且实用的数字体验
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up" style="animation-delay: 0.2s;">
+        <a href="#portfolio" class="btn-primary">查看作品</a>
+        <a href="#contact" class="btn-secondary">联系我</a>
+      </div>
+    </div>
+    
+    <!-- 向下滚动指示 -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <a href="#home" class="text-white">
+        <i class="fa fa-chevron-down text-2xl" aria-hidden="true"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- 首页/关于简介 -->
+  <section id="home" class="section-padding bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="w-full md:w-1/2">
+          <h2 class="section-title text-left">关于我的<span class="text-accent">故事</span></h2>
+          <p class="text-lg mb-6 text-gray-700 dark:text-gray-300">
+            我是一名拥有5年经验的设计师和开发者，专注于创建美观且实用的数字体验。我热衷于将创意想法转化为现实，并不断探索新技术和设计趋势。
+          </p>
+          <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
+            我的专业领域包括UI/UX设计、前端开发和品牌设计。我相信好的设计不仅仅是外观，更是关于如何解决问题和提升用户体验。
+          </p>
+          <div class="flex flex-wrap gap-3 mb-8">
+            <span class="badge">唱</span>
+            <span class="badge">跳</span>
+            <span class="badge">rap</span>
+            <span class="badge">篮球</span>
+            <span class="badge">交互设计</span>
+          </div>
+          <a href="#about" class="btn-primary">了解更多</a>
+        </div>
+        <div class="w-full md:w-1/2">
+          <div class="relative">
+            <div class="absolute -inset-1 bg-gradient-to-r from-accent to-secondary rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000"></div>
+            <div class="relative bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl">
+              <img src="https://p26-doubao-search-sign.byteimg.com/labis/2db97874ab729ba2b352b0a0c6274372~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=6oJwP0dYkuAz8g9pdq3GqwvTymo%3D" 
+                   alt="Alex Chen" 
+                   class="w-full h-auto object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 博客文章 -->
+  <section id="blog" class="section-padding bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title">最新<span class="text-accent">博客</span></h2>
+      
+      <!-- 博客分类筛选 -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <button class="blog-filter-btn active" data-category="all">全部</button>
+        <button class="blog-filter-btn" data-category="design">设计</button>
+        <button class="blog-filter-btn" data-category="development">开发</button>
+        <button class="blog-filter-btn" data-category="ux">用户体验</button>
+      </div>
+      
+      <!-- 博客文章列表 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 博客文章卡片 1 -->
+        <article class="blog-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md card-hover" data-category="development">
+          <div class="relative overflow-hidden h-48">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/c3fdd02001f04051ac107db014453066~tplv-a9rns2rl98-image.image?rcl=20250927150945623B459B707021C9CEFD&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1761549007&x-signature=0HFsEu30PdnkbGCq2JIa%2Bc7nPuU%3D" 
+                 alt="编程技术前沿" 
+                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-2 py-1 rounded">
+              开发
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+              <i class="fa fa-calendar mr-2" aria-hidden="true"></i>
+              <span>2025年7月21日</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3 hover:text-accent transition-colors">
+              <a href="#" class="blog-read-more">现代前端框架性能对比</a>
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+              本文深入分析了当前主流前端框架的性能表现，包括加载速度、渲染性能和内存占用等关键指标，并提供了选择框架时的实用建议...
+            </p>
+            <a href="#" class="blog-read-more inline-flex items-center text-accent hover:text-secondary transition-colors">
+              阅读更多
+              <i class="fa fa-arrow-right ml-2" aria-hidden="true"></i>
+            </a>
+          </div>
+        </article>
+        
+        <!-- 博客文章卡片 2 -->
+        <article class="blog-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md card-hover" data-category="design">
+          <div class="relative overflow-hidden h-48">
+            <img src="https://p3-doubao-search-sign.byteimg.com/labis/74174796521ec327305ce34a468bd5ed~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=%2BEhMCEi3HtyLSyzPA1vyqzjHKRY%3D" 
+                 alt="设计是空" 
+                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            <div class="absolute top-4 right-4 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+              设计
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+              <i class="fa fa-calendar mr-2" aria-hidden="true"></i>
+              <span>2025年7月15日</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3 hover:text-accent transition-colors">
+              <a href="#" class="blog-read-more">极简主义设计的力量</a>
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+              极简主义设计不仅仅是一种美学选择，更是一种思维方式。本文探讨了如何通过减少元素和聚焦核心功能来创造更有效的设计...
+            </p>
+            <a href="#" class="blog-read-more inline-flex items-center text-accent hover:text-secondary transition-colors">
+              阅读更多
+              <i class="fa fa-arrow-right ml-2" aria-hidden="true"></i>
+            </a>
+          </div>
+        </article>
+        
+        <!-- 博客文章卡片 3 -->
+        <article class="blog-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md card-hover" data-category="ux">
+          <div class="relative overflow-hidden h-48">
+            <img src="https://p3-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/ed7d519a61a14f58abe1f0627e33deba~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=ElIIGFeMmuy%2FqeHuXWE3OXzMc6M%3D" 
+                 alt="用户体验" 
+                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+            <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+              用户体验
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+              <i class="fa fa-calendar mr-2" aria-hidden="true"></i>
+              <span>2025年7月8日</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3 hover:text-accent transition-colors">
+              <a href="#" class="blog-read-more">如何进行有效的用户研究</a>
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+              用户研究是设计过程中的关键环节。本文分享了一些实用的用户研究方法和工具，帮助设计师更好地了解用户需求和行为...
+            </p>
+            <a href="#" class="blog-read-more inline-flex items-center text-accent hover:text-secondary transition-colors">
+              阅读更多
+              <i class="fa fa-arrow-right ml-2" aria-hidden="true"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+      
+      <!-- 查看更多按钮 -->
+      <div class="text-center mt-12">
+        <button id="load-more-blog" class="btn-secondary">
+          加载更多
+          <i class="fa fa-refresh ml-2" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 作品集 -->
+  <section id="portfolio" class="section-padding bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title">精选<span class="text-accent">作品</span></h2>
+      
+      <!-- 作品集分类筛选 -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <button class="portfolio-filter-btn active" data-category="all">全部</button>
+        <button class="portfolio-filter-btn" data-category="ui">UI设计</button>
+        <button class="portfolio-filter-btn" data-category="web">网站</button>
+        <button class="portfolio-filter-btn" data-category="brand">品牌</button>
+      </div>
+      
+      <!-- 作品集网格 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 作品集项目 1 -->
+        <div class="portfolio-item bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden shadow-md card-hover" data-category="ui">
+          <div class="relative overflow-hidden group">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/f85ed997f769467fb14d280fe314fc93~tplv-a9rns2rl98-image.image?rcl=20250927150945623B459B707021C9CEFD&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1761549012&x-signature=aRr%2Ftv5EBvvSAhp%2Fw9Rlz6VfWxg%3D" 
+                 alt="创意设计作品集" 
+                 class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <div class="p-6 text-white">
+                <h3 class="text-xl font-bold mb-2">创意设计作品集</h3>
+                <p class="mb-4">现代简约风格的产品设计与品牌视觉</p>
+                <button class="view-project-btn px-4 py-2 bg-accent text-white rounded-md hover:bg-secondary transition-colors" data-id="1">
+                  查看详情
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">创意设计作品集</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">现代简约风格的产品设计与品牌视觉</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">UI设计</span>
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">产品设计</span>
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">品牌</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 作品集项目 2 -->
+        <div class="portfolio-item bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden shadow-md card-hover" data-category="web">
+          <div class="relative overflow-hidden group">
+            <img src="https://p3-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/498f266518434fd2b9e3a52ab25c80a2~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=wWEn4TH9FLsbLz2xX9zxg%2BL%2BtvQ%3D" 
+                 alt="建筑设计网站" 
+                 class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <div class="p-6 text-white">
+                <h3 class="text-xl font-bold mb-2">建筑设计网站</h3>
+                <p class="mb-4">为建筑设计公司打造的响应式官网</p>
+                <button class="view-project-btn px-4 py-2 bg-accent text-white rounded-md hover:bg-secondary transition-colors" data-id="2">
+                  查看详情
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">建筑设计网站</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">为建筑设计公司打造的响应式官网</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">网站设计</span>
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">响应式</span>
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">前端开发</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 作品集项目 3 -->
+        <div class="portfolio-item bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden shadow-md card-hover" data-category="brand">
+          <div class="relative overflow-hidden group">
+            <img src="https://p3-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/61c18bd432474ead89bb8a008ac4d5a0~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=Km3I0LXcfEQH0SNmFztoj39e2Jk%3D" 
+                 alt="品牌设计" 
+                 class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <div class="p-6 text-white">
+                <h3 class="text-xl font-bold mb-2">品牌设计</h3>
+                <p class="mb-4">城市规划研究院品牌形象设计</p>
+                <button class="view-project-btn px-4 py-2 bg-accent text-white rounded-md hover:bg-secondary transition-colors" data-id="3">
+                  查看详情
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">品牌设计</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">城市规划研究院品牌形象设计</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">品牌设计</span>
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">标志设计</span>
+              <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">视觉识别</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 查看更多按钮 -->
+      <div class="text-center mt-12">
+        <button id="load-more-portfolio" class="btn-secondary">
+          加载更多
+          <i class="fa fa-refresh ml-2" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我 -->
+  <section id="about" class="section-padding bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title">关于<span class="text-accent">我</span></h2>
+      
+      <div class="flex flex-col lg:flex-row gap-12">
+        <!-- 个人简介 -->
+        <div class="w-full lg:w-1/2">
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+            <h3 class="text-2xl font-bold mb-6">个人简介</h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-6">
+              我是Alex Chen，一名拥有5年经验的设计师和开发者，专注于创建美观且实用的数字体验。我热衷于将创意想法转化为现实，并不断探索新技术和设计趋势。
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mb-6">
+              我的专业领域包括UI/UX设计、前端开发和品牌设计。我相信好的设计不仅仅是外观，更是关于如何解决问题和提升用户体验。
+            </p>
+            <p class="text-gray-700 dark:text-gray-300 mb-8">
+              在过去的工作中，我与多家企业合作，帮助他们打造了出色的数字产品和品牌形象。我擅长将复杂的问题简化，并创造出既美观又实用的解决方案。
+            </p>
+            
+            <!-- 社交媒体链接 -->
+            <div class="flex space-x-4">
+              <a href="#" class="social-link" aria-label="GitHub">
+                <i class="fa fa-github" aria-hidden="true"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="LinkedIn">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Dribbble">
+                <i class="fa fa-dribbble" aria-hidden="true"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Behance">
+                <i class="fa fa-behance" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 技能和经验 -->
+        <div class="w-full lg:w-1/2">
+          <!-- 技能 -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-8">
+            <h3 class="text-2xl font-bold mb-6">技能</h3>
+            
+            <!-- 技能条 -->
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium">UI/UX设计</span>
+                  <span>95%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div class="bg-accent h-2.5 rounded-full" style="width: 95%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium">前端开发</span>
+                  <span>90%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div class="bg-accent h-2.5 rounded-full" style="width: 90%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium">品牌设计</span>
+                  <span>85%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div class="bg-accent h-2.5 rounded-full" style="width: 85%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="font-medium">动效设计</span>
+                  <span>80%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  <div class="bg-accent h-2.5 rounded-full" style="width: 80%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 经验 -->
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+            <h3 class="text-2xl font-bold mb-6">经验</h3>
+            
+            <!-- 经验时间线 -->
+            <div class="space-y-8">
+              <div class="relative pl-8 border-l-2 border-accent">
+                <div class="absolute w-4 h-4 bg-accent rounded-full -left-[9px]"></div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">2022 - 至今</div>
+                <h4 class="text-xl font-bold mb-2">高级UI/UX设计师</h4>
+                <p class="text-gray-700 dark:text-gray-300">科技创新公司</p>
+              </div>
+              
+              <div class="relative pl-8 border-l-2 border-accent">
+                <div class="absolute w-4 h-4 bg-accent rounded-full -left-[9px]"></div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">2020 - 2022</div>
+                <h4 class="text-xl font-bold mb-2">前端开发工程师</h4>
+                <p class="text-gray-700 dark:text-gray-300">数字营销机构</p>
+              </div>
+              
+              <div class="relative pl-8 border-l-2 border-accent">
+                <div class="absolute w-4 h-4 bg-accent rounded-full -left-[9px]"></div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">2018 - 2020</div>
+                <h4 class="text-xl font-bold mb-2">UI设计师</h4>
+                <p class="text-gray-700 dark:text-gray-300">设计工作室</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 数据统计 -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+        <div class="text-center">
+          <div class="text-4xl font-bold text-accent mb-2 counter" data-target="50">0</div>
+          <p class="text-gray-700 dark:text-gray-300">完成项目</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="text-4xl font-bold text-accent mb-2 counter" data-target="30">0</div>
+          <p class="text-gray-700 dark:text-gray-300">合作客户</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="text-4xl font-bold text-accent mb-2 counter" data-target="5">0</div>
+          <p class="text-gray-700 dark:text-gray-300">从业年限</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="text-4xl font-bold text-accent mb-2 counter" data-target="15">0</div>
+          <p class="text-gray-700 dark:text-gray-300">获得奖项</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI 推荐区域 -->
+  <section class="py-16 bg-gradient-to-r from-primary to-secondary text-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="w-full md:w-2/3">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">AI 推荐文章</h2>
+          <p class="text-lg mb-6 opacity-90">
+            基于您的浏览兴趣，我们的AI系统为您推荐以下文章。这些内容与您之前查看的主题高度相关，希望能为您带来新的启发。
+          </p>
+          
+          <!-- AI 推荐标签 -->
+          <div class="flex flex-wrap gap-3 mb-8">
+            <span class="bg-white/20 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">前端开发</span>
+            <span class="bg-white/20 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">UI设计</span>
+            <span class="bg-white/20 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">用户体验</span>
+            <span class="bg-white/20 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">响应式设计</span>
+          </div>
+          
+          <button id="refresh-ai-recommendations" class="px-6 py-3 bg-white text-primary font-bold rounded-md hover:bg-opacity-90 transition-colors flex items-center">
+            <i class="fa fa-refresh mr-2" aria-hidden="true"></i>
+            刷新推荐
+          </button>
+        </div>
+        
+        <div class="w-full md:w-1/3">
+          <div class="bg-white/10 backdrop-blur-sm rounded-lg p-6 shadow-lg">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center mr-4">
+                <i class="fa fa-lightbulb-o text-xl" aria-hidden="true"></i>
+              </div>
+              <div>
+                <h3 class="font-bold">个性化推荐</h3>
+                <p class="text-sm opacity-80">根据您的兴趣定制</p>
+              </div>
+            </div>
+            
+            <!-- AI 推荐文章列表 -->
+            <div class="space-y-4" id="ai-recommendations">
+              <a href="#" class="block p-3 bg-white/5 rounded-md hover:bg-white/10 transition-colors">
+                <h4 class="font-medium mb-1">2025年UI设计趋势预测</h4>
+                <p class="text-sm opacity-80">了解即将到来的设计趋势，提前做好准备</p>
+              </a>
+              
+              <a href="#" class="block p-3 bg-white/5 rounded-md hover:bg-white/10 transition-colors">
+                <h4 class="font-medium mb-1">提升网站性能的10个实用技巧</h4>
+                <p class="text-sm opacity-80">优化您的网站加载速度和用户体验</p>
+              </a>
+              
+              <a href="#" class="block p-3 bg-white/5 rounded-md hover:bg-white/10 transition-colors">
+                <h4 class="font-medium mb-1">如何进行有效的用户测试</h4>
+                <p class="text-sm opacity-80">实用的用户测试方法和工具推荐</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系表单 -->
+  <section id="contact" class="section-padding bg-white dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <h2 class="section-title">联系<span class="text-accent">我</span></h2>
+      
+      <div class="flex flex-col lg:flex-row gap-12">
+        <!-- 联系信息 -->
+        <div class="w-full lg:w-1/3">
+          <div class="bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md p-8 h-full">
+            <h3 class="text-2xl font-bold mb-6">联系信息</h3>
+            
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                  <i class="fa fa-envelope text-accent" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">邮箱</h4>
+                  <p class="text-gray-700 dark:text-gray-300">alex.chen@example.com</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                  <i class="fa fa-phone text-accent" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">电话</h4>
+                  <p class="text-gray-700 dark:text-gray-300">+86 138 1234 5678</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                  <i class="fa fa-map-marker text-accent" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">地址</h4>
+                  <p class="text-gray-700 dark:text-gray-300">上海市浦东新区张江高科技园区</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 社交媒体链接 -->
+            <div class="mt-8">
+              <h4 class="font-bold mb-4">关注我</h4>
+              <div class="flex space-x-4">
+                <a href="#" class="social-link" aria-label="GitHub">
+                  <i class="fa fa-github" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="LinkedIn">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Dribbble">
+                  <i class="fa fa-dribbble" aria-hidden="true"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Behance">
+                  <i class="fa fa-behance" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 联系表单 -->
+        <div class="w-full lg:w-2/3">
+          <div class="bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md p-8">
+            <h3 class="text-2xl font-bold mb-6">发送消息</h3>
+            
+            <form id="contact-form" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">姓名</label>
+                  <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="您的姓名" required>
+                </div>
+                
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">邮箱</label>
+                  <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="您的邮箱" required>
+                </div>
+              </div>
+              
+              <div>
+                <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">主题</label>
+                <input type="text" id="subject" name="subject" class="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="消息主题" required>
+              </div>
+              
+              <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">消息</label>
+                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="请输入您的消息..." required></textarea>
+              </div>
+              
+              <div>
+                <button type="submit" class="btn-primary w-full md:w-auto">
+                  发送消息
+                  <i class="fa fa-paper-plane ml-2" aria-hidden="true"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-primary dark:bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <a href="#hero" class="text-2xl font-bold">Alex<span class="text-accent">.Chen</span></a>
+          <p class="mt-2 text-gray-300">设计师 & 开发者</p>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-6">
+          <a href="#home" class="footer-link">首页</a>
+          <a href="#blog" class="footer-link">博客</a>
+          <a href="#portfolio" class="footer-link">作品集</a>
+          <a href="#about" class="footer-link">关于我</a>
+          <a href="#contact" class="footer-link">联系</a>
+        </div>
+      </div>
+      
+      <hr class="border-gray-700 my-8">
+      
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Alex Chen. 保留所有权利。</p>
+        
+        <div class="flex space-x-4">
+          <a href="#" class="footer-social-link" aria-label="GitHub">
+            <i class="fa fa-github" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer-social-link" aria-label="LinkedIn">
+            <i class="fa fa-linkedin" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer-social-link" aria-label="Dribbble">
+            <i class="fa fa-dribbble" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer-social-link" aria-label="Behance">
+            <i class="fa fa-behance" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 灵动岛 -->
+  <div class="fixed bottom-8 left-0 right-0 flex justify-center z-50 transition-transform duration-500" id="dynamic-island-container">
+    <div class="flex items-center justify-between px-6 py-3 rounded-full bg-[rgba(66,66,66,0.7)] backdrop-blur-md transition-all duration-300 dark:bg-[rgba(20,20,20,0.7)]" id="dynamic-island">
+      <span class="text-white mr-3 transition-all duration-300" id="island-text">欢迎访问我的博客</span>
+      <div class="flex items-center justify-center w-6 h-6 rounded-full bg-accent text-white transition-all duration-300">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- 项目详情模态框 -->
+  <div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-75 backdrop-blur-sm" id="modal-backdrop"></div>
+    
+    <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-slide-up">
+      <button id="close-modal" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white z-10 hover:bg-white/20 transition-colors">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+      
+      <div id="project-content" class="p-6 md:p-8">
+        <!-- 项目内容将通过JavaScript动态填充 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 博客文章详情模态框 -->
+  <div id="blog-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-75 backdrop-blur-sm" id="blog-modal-backdrop"></div>
+    
+    <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-slide-up">
+      <button id="close-blog-modal" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white z-10 hover:bg-white/20 transition-colors">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+      
+      <div id="blog-content" class="p-6 md:p-8">
+        <!-- 博客内容将通过JavaScript动态填充 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // DOM 加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+      // 主题切换
+      const themeToggle = document.getElementById('theme-toggle');
+      const htmlElement = document.documentElement;
+      
+      // 检查本地存储中的主题偏好
+      if (localStorage.getItem('theme') === 'dark' || 
+          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        htmlElement.classList.add('dark');
+      }
+      
+      // 主题切换事件
+      themeToggle.addEventListener('click', function() {
+        htmlElement.classList.toggle('dark');
+        
+        // 保存主题偏好到本地存储
+        if (htmlElement.classList.contains('dark')) {
+          localStorage.setItem('theme', 'dark');
+        } else {
+          localStorage.setItem('theme', 'light');
+        }
+      });
+      
+      // 移动端菜单
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+      });
+      
+      // 移动端菜单项点击后关闭菜单
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.add('hidden');
+        });
+      });
+      
+      // 导航链接高亮
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      window.addEventListener('scroll', function() {
+        let current = '';
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          
+          if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('text-accent', 'font-bold');
+          if (link.getAttribute('href').substring(1) === current) {
+            link.classList.add('text-accent', 'font-bold');
+          }
+        });
+      });
+      
+      // 博客文章筛选
+      const blogFilterBtns = document.querySelectorAll('.blog-filter-btn');
+      const blogCards = document.querySelectorAll('.blog-card');
+      
+      blogFilterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // 移除所有按钮的active类
+          blogFilterBtns.forEach(b => b.classList.remove('active', 'bg-accent', 'text-white'));
+          
+          // 添加当前按钮的active类
+          this.classList.add('active', 'bg-accent', 'text-white');
+          
+          const category = this.getAttribute('data-category');
+          
+          blogCards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+      
+      // 作品集筛选
+      const portfolioFilterBtns = document.querySelectorAll('.portfolio-filter-btn');
+      const portfolioItems = document.querySelectorAll('.portfolio-item');
+      
+      portfolioFilterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // 移除所有按钮的active类
+          portfolioFilterBtns.forEach(b => b.classList.remove('active', 'bg-accent', 'text-white'));
+          
+          // 添加当前按钮的active类
+          this.classList.add('active', 'bg-accent', 'text-white');
+          
+          const category = this.getAttribute('data-category');
+          
+          portfolioItems.forEach(item => {
+            if (category === 'all' || item.getAttribute('data-category') === category) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+      
+      // 项目详情模态框
+      const projectModal = document.getElementById('project-modal');
+      const modalBackdrop = document.getElementById('modal-backdrop');
+      const closeModal = document.getElementById('close-modal');
+      const projectContent = document.getElementById('project-content');
+      const viewProjectBtns = document.querySelectorAll('.view-project-btn');
+      
+      // 项目数据
+      const projectsData = [
+        {
+          id: 1,
+          title: "创意设计作品集",
+          category: "UI设计",
+          client: "创意设计工作室",
+          date: "2025年6月",
+          description: "这是一个为创意设计工作室打造的作品集网站，展示了他们的最新项目和设计理念。网站采用现代简约风格，注重视觉层次感和用户体验。",
+          challenge: "挑战在于如何在保持简约风格的同时，展示丰富的设计作品，并确保网站在各种设备上都能提供良好的浏览体验。",
+          solution: "采用了响应式设计，使用网格布局展示作品，并添加了微妙的动画效果增强用户体验。色彩方案以中性色调为主，突出作品本身。",
+          image: "https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/f85ed997f769467fb14d280fe314fc93~tplv-a9rns2rl98-image.image?rcl=20250927150945623B459B707021C9CEFD&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1761549012&x-signature=aRr%2Ftv5EBvvSAhp%2Fw9Rlz6VfWxg%3D"
+        },
+        {
+          id: 2,
+          title: "建筑设计网站",
+          category: "网站设计",
+          client: "城市建筑设计公司",
+          date: "2025年4月",
+          description: "为一家城市建筑设计公司打造的响应式官网，展示他们的建筑项目、设计理念和公司文化。网站融合了现代设计元素和建筑行业特色。",
+          challenge: "需要在网站中展示大量高质量的建筑图片，同时保持网站的加载速度和性能，这对优化提出了很高的要求。",
+          solution: "使用了图片懒加载技术和响应式图片，确保网站在各种设备上都能快速加载。设计上采用了全屏图片展示和简洁的导航，突出建筑作品的视觉冲击力。",
+          image: "https://p3-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/498f266518434fd2b9e3a52ab25c80a2~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=wWEn4TH9FLsbLz2xX9zxg%2BL%2BtvQ%3D"
+        },
+        {
+          id: 3,
+          title: "品牌设计",
+          category: "品牌设计",
+          client: "城市规划研究院",
+          date: "2025年2月",
+          description: "为城市规划研究院设计的品牌形象，包括标志、视觉识别系统和宣传材料。设计灵感来源于城市规划的几何美学和空间感。",
+          challenge: "需要创建一个既专业又现代的品牌形象，能够体现研究院的专业性和创新性，同时易于识别和记忆。",
+          solution: "设计了基于几何图形的标志，使用了蓝色和灰色的配色方案，体现专业和稳重。创建了一套完整的视觉识别系统，确保在各种应用场景中都能保持一致性。",
+          image: "https://p3-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/61c18bd432474ead89bb8a008ac4d5a0~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=Km3I0LXcfEQH0SNmFztoj39e2Jk%3D"
+        }
+      ];
+      
+      // 打开项目详情模态框
+      viewProjectBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const projectId = parseInt(this.getAttribute('data-id'));
+          const project = projectsData.find(p => p.id === projectId);
+          
+          if (project) {
+            // 填充项目内容
+            projectContent.innerHTML = `
+              <div class="mb-8">
+                <img src="${project.image}" alt="${project.title}" class="w-full h-auto rounded-lg">
+              </div>
+              
+              <h2 class="text-3xl font-bold mb-6">${project.title}</h2>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div>
+                  <h3 class="text-lg font-bold mb-2">项目信息</h3>
+                  <ul class="space-y-2">
+                    <li><span class="font-medium">类别：</span>${project.category}</li>
+                    <li><span class="font-medium">客户：</span>${project.client}</li>
+                    <li><span class="font-medium">日期：</span>${project.date}</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 class="text-lg font-bold mb-2">使用技术</h3>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">HTML5</span>
+                    <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">CSS3</span>
+                    <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">JavaScript</span>
+                    <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">Tailwind CSS</span>
+                    <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">Figma</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="space-y-6">
+                <div>
+                  <h3 class="text-xl font-bold mb-3">项目描述</h3>
+                  <p class="text-gray-700 dark:text-gray-300">${project.description}</p>
+                </div>
+                
+                <div>
+                  <h3 class="text-xl font-bold mb-3">挑战</h3>
+                  <p class="text-gray-700 dark:text-gray-300">${project.challenge}</p>
+                </div>
+                
+                <div>
+                  <h3 class="text-xl font-bold mb-3">解决方案</h3>
+                  <p class="text-gray-700 dark:text-gray-300">${project.solution}</p>
+                </div>
+              </div>
+            `;
+            
+            // 显示模态框
+            projectModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+          }
+        });
+      });
+      
+      // 关闭项目详情模态框
+      function closeProjectModal() {
+        projectModal.classList.add('hidden');
+        document.body.style.overflow = ''; // 恢复背景滚动
+      }
+      
+      closeModal.addEventListener('click', closeProjectModal);
+      modalBackdrop.addEventListener('click', closeProjectModal);
+      
+      // 博客文章详情模态框
+      const blogModal = document.getElementById('blog-modal');
+      const blogModalBackdrop = document.getElementById('blog-modal-backdrop');
+      const closeBlogModal = document.getElementById('close-blog-modal');
+      const blogContent = document.getElementById('blog-content');
+      const blogReadMoreLinks = document.querySelectorAll('.blog-read-more');
+      
+      // 博客文章数据
+      const blogPostsData = [
+        {
+          title: "现代前端框架性能对比",
+          category: "开发",
+          date: "2025年7月21日",
+          author: "Alex Chen",
+          image: "https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/c3fdd02001f04051ac107db014453066~tplv-a9rns2rl98-image.image?rcl=20250927150945623B459B707021C9CEFD&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1761549007&x-signature=0HFsEu30PdnkbGCq2JIa%2Bc7nPuU%3D",
+          content: `
+            <p class="mb-4">本文深入分析了当前主流前端框架的性能表现，包括加载速度、渲染性能和内存占用等关键指标，并提供了选择框架时的实用建议。</p>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">1. 引言</h3>
+            <p class="mb-4">随着前端技术的快速发展，开发者面临着越来越多的框架选择。从React、Vue到Angular，每个框架都有其独特的优势和适用场景。本文旨在通过客观的数据对比，帮助开发者在选择框架时做出更明智的决策。</p>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">2. 测试方法</h3>
+            <p class="mb-4">我们使用了以下测试方法来评估各个框架的性能：</p>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>初始加载时间：测量页面从开始加载到完全可用所需的时间</li>
+              <li>渲染性能：使用FPS（每秒帧数）衡量动画和交互的流畅度</li>
+              <li>内存占用：监测应用在运行过程中的内存使用情况</li>
+              <li>更新性能：测量组件更新时的响应时间</li>
+            </ul>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">3. 测试结果</h3>
+            <p class="mb-4">测试结果显示，在初始加载时间方面，Vue.js表现最佳，其次是React，Angular则需要更长的加载时间。然而，在渲染性能和内存占用方面，React表现出色，特别是在处理大量数据和复杂组件时。</p>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">4. 结论与建议</h3>
+            <p class="mb-4">根据测试结果，我们提出以下建议：</p>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>对于注重初始加载速度的应用，如移动应用和营销网站，建议选择Vue.js</li>
+              <li>对于需要处理大量数据和复杂交互的应用，如仪表盘和管理系统，React是更好的选择</li>
+              <li>对于大型企业应用和需要严格类型检查的项目，Angular仍然是一个可靠的选择</li>
+            </ul>
+            
+            <p class="mb-4">最终，框架的选择应该基于项目的具体需求、团队的技术背景和长期维护考虑。没有一个框架是万能的，关键在于如何根据实际情况做出最合适的选择。</p>
+          `
+        },
+        {
+          title: "极简主义设计的力量",
+          category: "设计",
+          date: "2025年7月15日",
+          author: "Alex Chen",
+          image: "https://p3-doubao-search-sign.byteimg.com/labis/74174796521ec327305ce34a468bd5ed~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=%2BEhMCEi3HtyLSyzPA1vyqzjHKRY%3D",
+          content: `
+            <p class="mb-4">极简主义设计不仅仅是一种美学选择，更是一种思维方式。本文探讨了如何通过减少元素和聚焦核心功能来创造更有效的设计。</p>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">1. 极简主义设计的原则</h3>
+            <p class="mb-4">极简主义设计基于以下核心原则：</p>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>少即是多：通过减少不必要的元素，突出核心内容</li>
+              <li>功能性优先：设计应该首先满足功能需求，然后才是美学考虑</li>
+              <li>留白的力量：适当的留白可以增强可读性和视觉层次</li>
+              <li>专注于本质：关注事物的本质特征，去除表面装饰</li>
+            </ul>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">2. 极简主义在UI设计中的应用</h3>
+            <p class="mb-4">在UI设计中，极简主义可以通过以下方式应用：</p>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>简化导航：减少菜单选项，突出核心功能</li>
+              <li>限制色彩：使用有限的色彩 palette，通常不超过3-4种主要颜色</li>
+              <li>精简表单：只收集必要的信息，减少用户输入负担</li>
+              <li>优化排版：使用清晰的层次结构和足够的留白</li>
+            </ul>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">3. 极简主义设计的挑战</h3>
+            <p class="mb-4">尽管极简主义设计有很多优势，但也面临一些挑战：</p>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>平衡简约与功能：确保在简化设计的同时不牺牲必要的功能</li>
+              <li>避免过度简化：过度简化可能导致用户困惑和使用困难</li>
+              <li>保持一致性：在整个产品中保持一致的设计语言</li>
+            </ul>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">4. 极简主义设计的案例研究</h3>
+            <p class="mb-4">通过分析一些成功的极简主义设计案例，我们可以看到如何在实践中应用这些原则。例如，Apple的设计语言一直以极简主义著称，通过简洁的界面和精心设计的交互，创造出既美观又易用的产品。</p>
+            
+            <p class="mb-4">总之，极简主义设计不仅仅是一种风格选择，更是一种解决问题的方法。通过专注于本质和去除冗余，我们可以创造出更有效、更有意义的设计。</p>
+          `
+        },
+        {
+          title: "如何进行有效的用户研究",
+          category: "用户体验",
+          date: "2025年7月8日",
+          author: "Alex Chen",
+          image: "https://p3-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/ed7d519a61a14f58abe1f0627e33deba~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1764140995&x-signature=ElIIGFeMmuy%2FqeHuXWE3OXzMc6M%3D",
+          content: `
+            <p class="mb-4">用户研究是设计过程中的关键环节。本文分享了一些实用的用户研究方法和工具，帮助设计师更好地了解用户需求和行为。</p>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">1. 用户研究的重要性</h3>
+            <p class="mb-4">用户研究是设计过程中不可或缺的一部分，它帮助我们：</p>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>了解用户的需求和痛点</li>
+              <li>验证设计假设</li>
+              <li>发现用户行为模式</li>
+              <li>评估设计方案的有效性</li>
+            </ul>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">2. 常用的用户研究方法</h3>
+            <p class="mb-4">以下是一些常用的用户研究方法：</p>
+            
+            <h4 class="text-lg font-bold mb-2 mt-4">2.1 用户访谈</h4>
+            <p class="mb-4">一对一深度访谈可以帮助我们了解用户的想法、感受和使用场景。访谈应该是半结构化的，既有预设问题，又允许灵活探索。</p>
+            
+            <h4 class="text-lg font-bold mb-2 mt-4">2.2 问卷调查</h4>
+            <p class="mb-4">问卷调查适合收集大量用户的反馈和偏好。设计问卷时应注意问题的清晰度和中立性，避免引导性问题。</p>
+            
+            <h4 class="text-lg font-bold mb-2 mt-4">2.3 用户测试</h4>
+            <p class="mb-4">用户测试让用户实际使用产品，观察他们的行为和反馈。这种方法可以发现用户在使用过程中遇到的问题和困惑。</p>
+            
+            <h4 class="text-lg font-bold mb-2 mt-4">2.4 数据分析</h4>
+            <p class="mb-4">通过分析产品的使用数据，我们可以了解用户的实际行为模式，发现改进机会。</p>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">3. 用户研究的步骤</h3>
+            <p class="mb-4">有效的用户研究通常包括以下步骤：</p>
+            <ol class="list-decimal pl-6 mb-4 space-y-2">
+              <li>确定研究目标：明确我们希望通过研究解决什么问题</li>
+              <li>选择研究方法：根据目标选择合适的研究方法</li>
+              <li>招募参与者：选择代表性的用户样本</li>
+              <li>执行研究：按照计划进行研究活动</li>
+              <li>分析数据：整理和分析收集到的数据</li>
+              <li>提取洞察：从数据中提取有价值的洞察和发现</li>
+              <li>应用结果：将研究结果应用到设计决策中</li>
+            </ol>
+            
+            <h3 class="text-xl font-bold mb-3 mt-6">4. 用户研究工具推荐</h3>
+            <p class="mb-4">以下是一些实用的用户研究工具：</p>
+            <ul class="list-disc pl-6 mb-4 space-y-2">
+              <li>用户访谈：Zoom, Teams, Google Meet</li>
+              <li>问卷调查：Typeform, Google Forms, SurveyMonkey</li>
+              <li>用户测试：UserTesting, Maze, Lookback</li>
+              <li>数据分析：Google Analytics, Hotjar, Mixpanel</li>
+            </ul>
+            
+            <p class="mb-4">总之，有效的用户研究是创造成功产品的关键。通过了解用户的需求和行为，我们可以设计出更符合用户期望的产品，提升用户体验和满意度。</p>
+          `
+        }
+      ];
+      
+      // 打开博客文章详情模态框
+      blogReadMoreLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const postTitle = this.textContent.trim();
+          const post = blogPostsData.find(p => p.title === postTitle);
+          
+          if (post) {
+            // 填充博客内容
+            blogContent.innerHTML = `
+              <div class="mb-8">
+                <img src="${post.image}" alt="${post.title}" class="w-full h-auto rounded-lg">
+              </div>
+              
+              <h1 class="text-3xl font-bold mb-2">${post.title}</h1>
+              
+              <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6">
+                <span class="mr-4"><i class="fa fa-calendar mr-1" aria-hidden="true"></i> ${post.date}</span>
+                <span class="mr-4"><i class="fa fa-user mr-1" aria-hidden="true"></i> ${post.author}</span>
+                <span><i class="fa fa-tag mr-1" aria-hidden="true"></i> ${post.category}</span>
+              </div>
+              
+              <div class="prose dark:prose-invert max-w-none">
+                ${post.content}
+              </div>
+            `;
+            
+            // 显示模态框
+            blogModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+          }
+        });
+      });
+      
+      // 关闭博客文章详情模态框
+      function closeBlogPostModal() {
+        blogModal.classList.add('hidden');
+        document.body.style.overflow = ''; // 恢复背景滚动
+      }
+      
+      closeBlogModal.addEventListener('click', closeBlogPostModal);
+      blogModalBackdrop.addEventListener('click', closeBlogPostModal);
+      
+      // 联系表单提交
+      const contactForm = document.getElementById('contact-form');
+      
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // 获取表单数据
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        
+        // 模拟表单提交
+        alert(`感谢您的留言，${name}！\n我们已收到您的消息，将尽快回复您。`);
+        
+        // 重置表单
+        contactForm.reset();
+      });
+      
+      // 数字计数器动画
+      const counters = document.querySelectorAll('.counter');
+      const speed = 200; // 动画速度
+      
+      // 检查元素是否在视口中
+      function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+      }
+      
+      // 启动计数器动画
+      function startCounters() {
+        counters.forEach(counter => {
+          if (isInViewport(counter) && !counter.classList.contains('counted')) {
+            counter.classList.add('counted');
+            
+            const target = +counter.getAttribute('data-target');
+            const increment = target / speed;
+            let currentCount = 0;
+            
+            const updateCount = () => {
+              if (currentCount < target) {
+                currentCount += increment;
+                counter.innerText = Math.ceil(currentCount);
+                setTimeout(updateCount, 1);
+              } else {
+                counter.innerText = target;
+              }
+            };
+            
+            updateCount();
+          }
+        });
+      }
+      
+      // 初始检查
+      startCounters();
+      
+      // 滚动时检查
+      window.addEventListener('scroll', startCounters);
+      
+      // AI 推荐刷新
+      const refreshAiRecommendations = document.getElementById('refresh-ai-recommendations');
+      const aiRecommendations = document.getElementById('ai-recommendations');
+      
+      // AI 推荐文章数据
+      const aiArticles = [
+        {
+          title: "2025年UI设计趋势预测",
+          description: "了解即将到来的设计趋势，提前做好准备"
+        },
+        {
+          title: "提升网站性能的10个实用技巧",
+          description: "优化您的网站加载速度和用户体验"
+        },
+        {
+          title: "如何进行有效的用户测试",
+          description: "实用的用户测试方法和工具推荐"
+        },
+        {
+          title: "响应式设计的最佳实践",
+          description: "创建在各种设备上都能完美展示的网站"
+        },
+        {
+          title: "设计系统的构建与维护",
+          description: "如何创建和维护高效的设计系统"
+        },
+        {
+          title: "前端开发中的性能优化",
+          description: "提升前端应用性能的关键策略"
+        }
+      ];
+      
+      // 刷新AI推荐
+      refreshAiRecommendations.addEventListener('click', function() {
+        // 显示加载动画
+        aiRecommendations.innerHTML = `
+          <div class="flex justify-center items-center py-8">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+          </div>
+        `;
+        
+        // 模拟API请求延迟
+        setTimeout(function() {
+          // 随机选择3篇文章
+          const shuffled = [...aiArticles].sort(() => 0.5 - Math.random());
+          const selected = shuffled.slice(0, 3);
+          
+          // 更新推荐内容
+          let html = '';
+          selected.forEach(article => {
+            html += `
+              <a href="#" class="block p-3 bg-white/5 rounded-md hover:bg-white/10 transition-colors">
+                <h4 class="font-medium mb-1">${article.title}</h4>
+                <p class="text-sm opacity-80">${article.description}</p>
+              </a>
+            `;
+          });
+          
+          aiRecommendations.innerHTML = html;
+        }, 1500);
+      });
+      
+      // 灵动岛交互
+      const islandContainer = document.getElementById('dynamic-island-container');
+      const islandText = document.getElementById('island-text');
+      const island = document.getElementById('dynamic-island');
+      
+      // 更新灵动岛内容
+      function updateIsland(newText) {
+        // 文字变化动画
+        islandText.style.opacity = '0';
+        islandText.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+          islandText.textContent = newText;
+          islandText.style.opacity = '1';
+          islandText.style.transform = 'scale(1)';
+          
+          // 根据文本长度调整宽度
+          const baseWidth = 120; // 最小宽度
+          const textWidth = islandText.offsetWidth;
+          island.style.width = `${Math.max(baseWidth, textWidth + 70)}px`;
+        }, 300);
+      }
+      
+      // 监听滚动以显示/隐藏/更新灵动岛
+      window.addEventListener('scroll', () => {
+        // 检测所在区域并更新灵动岛状态
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        
+        // 当滚动到页面底部时
+        if (scrollPosition + windowHeight >= documentHeight - 100) {
+          updateIsland('回到顶部');
+          island.addEventListener('click', () => {
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          });
+        } 
+        // 当在博客区域时
+        else if (scrollPosition >= document.getElementById('blog').offsetTop - 200 && 
+                 scrollPosition < document.getElementById('portfolio').offsetTop - 200) {
+          updateIsland('浏览最新博客');
+        } 
+        // 当在作品集区域时
+        else if (scrollPosition >= document.getElementById('portfolio').offsetTop - 200 && 
+                 scrollPosition < document.getElementById('about').offsetTop - 200) {
+          updateIsland('查看我的作品');
+        } 
+        // 当在关于区域时
+        else if (scrollPosition >= document.getElementById('about').offsetTop - 200 && 
+                 scrollPosition < document.getElementById('contact').offsetTop - 200) {
+          updateIsland('了解更多关于我');
+        } 
+        // 当在联系区域时
+        else if (scrollPosition >= document.getElementById('contact').offsetTop - 200) {
+          updateIsland('与我联系');
+        } 
+        // 默认状态
+        else {
+          updateIsland('欢迎访问我的博客');
+        }
+      });
+      
+      // 初始化灵动岛
+      updateIsland('欢迎访问我的博客');
+      
+      // 加载更多博客按钮
+      const loadMoreBlogBtn = document.getElementById('load-more-blog');
+      
+      loadMoreBlogBtn.addEventListener('click', function() {
+        // 显示加载动画
+        this.innerHTML = `
+          <i class="fa fa-spinner fa-spin mr-2" aria-hidden="true"></i>
+          加载中...
+        `;
+        
+        // 模拟加载延迟
+        setTimeout(() => {
+          // 恢复按钮文本
+          this.innerHTML = `
+            加载更多
+            <i class="fa fa-refresh ml-2" aria-hidden="true"></i>
+          `;
+          
+          // 显示提示
+          alert('已加载全部博客文章');
+        }, 1500);
+      });
+      
+      // 加载更多作品集按钮
+      const loadMorePortfolioBtn = document.getElementById('load-more-portfolio');
+      
+      loadMorePortfolioBtn.addEventListener('click', function() {
+        // 显示加载动画
+        this.innerHTML = `
+          <i class="fa fa-spinner fa-spin mr-2" aria-hidden="true"></i>
+          加载中...
+        `;
+        
+        // 模拟加载延迟
+        setTimeout(() => {
+          // 恢复按钮文本
+          this.innerHTML = `
+            加载更多
+            <i class="fa fa-refresh ml-2" aria-hidden="true"></i>
+          `;
+          
+          // 显示提示
+          alert('已加载全部作品集');
+        }, 1500);
+      });
+      
+      // 添加自定义样式
+      const style = document.createElement('style');
+      style.textContent = `
+        /* 导航链接样式 */
+        .nav-link {
+          @apply text-gray-700 dark:text-gray-300 hover:text-accent dark:hover:text-accent transition-colors;
+        }
+        
+        .mobile-nav-link {
+          @apply text-gray-700 dark:text-gray-300 hover:text-accent dark:hover:text-accent transition-colors;
+        }
+        
+        /* 按钮样式 */
+        .btn-primary {
+          @apply px-6 py-3 bg-accent text-white font-bold rounded-md hover:bg-secondary transition-colors;
+        }
+        
+        .btn-secondary {
+          @apply px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors;
+        }
+        
+        /* 标签样式 */
+        .badge {
+          @apply px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm;
+        }
+        
+        /* 博客和作品集筛选按钮样式 */
+        .blog-filter-btn, .portfolio-filter-btn {
+          @apply px-4 py-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+        }
+        
+        /* 社交媒体链接样式 */
+        .social-link {
+          @apply w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-accent hover:text-white dark:hover:bg-accent transition-colors;
+        }
+        
+        /* 页脚链接样式 */
+        .footer-link {
+          @apply text-gray-300 hover:text-white transition-colors;
+        }
+        
+        .footer-social-link {
+          @apply w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-gray-300 hover:bg-accent hover:text-white transition-colors;
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+          @apply w-2;
+        }
+        
+        ::-webkit-scrollbar-track {
+          @apply bg-gray-100 dark:bg-gray-800;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          @apply bg-gray-400 dark:bg-gray-600;
+        }
+      `;
+      document.head.appendChild(style);
+    });
+  </script>
+</body>
+</html>
